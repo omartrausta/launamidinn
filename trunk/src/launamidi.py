@@ -19,23 +19,13 @@ _manudir = {'janúar':1,
 def manudurSemNumer(manudur):
     return _manudir.get(manudur)
 
-#
 def regexp(s):
-    #split
-    #s = '<html><head><title>Title</title>'
-    pattern = re.compile('.')
-    print pattern.split(s)
+    pattern = re.compile(r'[. ]')
+    manudur = pattern.split(s)
+    return manudur[1]
 
-def vinna(stimplanir, taxtar):
-    
-#    print manudurSemNumer('febrúar')
-    
+def vinna(stimplanir, taxtar):  
     for stimplun in stimplanir:
-        for tup in stimplun:
-            print 
-            print type(tup)
-            #print regexp(tup[1])
-
-
-    
+        print regexp(stimplun[0])
+        print manudurSemNumer(regexp(stimplun[0]))
     return [("dv",1.0)]
