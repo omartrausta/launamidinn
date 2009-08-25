@@ -3,11 +3,14 @@ import datetime
 import time
 import operator
 import re
+import math
 
 
-stimplanir = [("17.ágúst 2009", ("09:00", "10:35"))]
-taxtar = [("dv", ("09:00", "17:00"), [0, 1, 2, 3, 4])]
+stimplanir = [("17.ágúst 2009", ("07:00", "09:35"))]
+taxtar = [("dv", ("06:00", "09:00"), [0, 1, 2, 3, 4]),("dv", ("08:00", "09:00"), [0, 1, 2, 3, 4])]
 
+
+_utkoma = {}
 _manudir = {'janúar':1,
                 'febrúar':2,
                 'mars':3,
@@ -38,6 +41,8 @@ def checkWeekday(t,w):
 
 
 def vinna(stimplanir, taxtar):
+    for taxti in taxtar:
+        _utkoma[taxti[0]] = 0.0   
     for stimplun in stimplanir:
         stimplDagsetning = dateFilter(stimplun[0])
         stimplTimi = stimplun[1]
@@ -50,6 +55,7 @@ def vinna(stimplanir, taxtar):
         print stimpunUt
         weekday = innDags.weekday()
         for taxti in taxtar:
+            print taxti[0]
             taxtiTimi = taxti[1]
             print taxtiTimi           
             taxtiStart = datetime.datetime.strptime(taxtiTimi[0],"%H:%M")
@@ -57,8 +63,12 @@ def vinna(stimplanir, taxtar):
             print taxtiStart
             print taxtiEnds
             if checkWeekday(taxti[2],weekday):
-                
-               
+                timiTaxta = min(taxtiEnds,stimpunUt) - max(taxtiStart,stimpunInn)
+                if timiTaxta < datetime.timedelta():
+                    print "mínus"
+                else:                  
+                    _utkoma[taxti[0]] = _utkoma[taxti[0]] + timiTaxta.seconds/3600.0
+        print _utkoma       
         delta = stimpunUt - stimpunInn
         print "%3.2f"%(delta.seconds/3600.0)
     return [("dv", 1.0)]
