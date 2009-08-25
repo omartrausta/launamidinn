@@ -29,10 +29,6 @@ def dateFilter(s):
     manudur = pattern.split(s)
     return manudur
 
-def timeFilter(s):
-    pattern = re.compile(r'[:]')
-    timi = pattern.split(s)
-    return timi
 
 def checkWeekday(t,w):
     for day in t:
@@ -42,30 +38,28 @@ def checkWeekday(t,w):
 
 
 def vinna(stimplanir, taxtar):
-    dv = 0.0
-    ev = 0.0
-    yv = 0.0
-    nv = 0.0
     for stimplun in stimplanir:
-        arrDagsetning = dateFilter(stimplun[0])
-        arrTimi = stimplun[1]
-        timiInn = timeFilter(arrTimi[0])      
-        timiUt = timeFilter(arrTimi[1])
-        manNumer = manudurSemNumer(arrDagsetning[1])
-        inn = datetime.datetime(int(arrDagsetning[2]), manNumer , int(arrDagsetning[0]), int(timiInn[0]), int(timiInn[1]))
-        ut = datetime.datetime(int(arrDagsetning[2]), manNumer , int(arrDagsetning[0]), int(timiUt[0]), int(timiUt[1]))
-        weekday = inn.weekday()
+        stimplDagsetning = dateFilter(stimplun[0])
+        stimplTimi = stimplun[1]
+        manNumer = manudurSemNumer(stimplDagsetning[1])
+        innDags = datetime.date(int(stimplDagsetning[2]), manNumer , int(stimplDagsetning[0]))
+        utDags = datetime.date(int(stimplDagsetning[2]), manNumer , int(stimplDagsetning[0]))
+        stimpunInn = datetime.datetime.strptime(stimplTimi[0],"%H:%M")
+        stimpunUt = datetime.datetime.strptime(stimplTimi[1],"%H:%M")
+        print stimpunInn
+        print stimpunUt
+        weekday = innDags.weekday()
         for taxti in taxtar:
             taxtiTimi = taxti[1]
             print taxtiTimi           
-            taxtiStart = datetime.datetime.time(datetime.datetime.strptime(taxtiTimi[0],"%H:%M"))
-            taxtiEnds = datetime.datetime.time(datetime.datetime.strptime(taxtiTimi[1],"%H:%M"))
+            taxtiStart = datetime.datetime.strptime(taxtiTimi[0],"%H:%M")
+            taxtiEnds = datetime.datetime.strptime(taxtiTimi[1],"%H:%M")
             print taxtiStart
             print taxtiEnds
             if checkWeekday(taxti[2],weekday):
-                print True
+                
                
-        delta = ut - inn
+        delta = stimpunUt - stimpunInn
         print "%3.2f"%(delta.seconds/3600.0)
     return [("dv", 1.0)]
 
