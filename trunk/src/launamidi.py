@@ -5,11 +5,6 @@ import operator
 import re
 import math
 
-
-stimplanir = [("17.ágúst 2009", ("07:00", "09:35"))]
-taxtar = [("dv", ("06:00", "09:00"), [0, 1, 2, 3, 4]),("dv", ("08:00", "09:00"), [0, 1, 2, 3, 4])]
-
-
 _utkoma = {}
 _manudir = {'janúar':1,
                 'febrúar':2,
@@ -51,26 +46,21 @@ def vinna(stimplanir, taxtar):
         utDags = datetime.date(int(stimplDagsetning[2]), manNumer , int(stimplDagsetning[0]))
         stimpunInn = datetime.datetime.strptime(stimplTimi[0],"%H:%M")
         stimpunUt = datetime.datetime.strptime(stimplTimi[1],"%H:%M")
-        print stimpunInn
-        print stimpunUt
+        #print stimpunInn
+        #print stimpunUt
         weekday = innDags.weekday()
         for taxti in taxtar:
-            print taxti[0]
+            #print taxti[0]
             taxtiTimi = taxti[1]
-            print taxtiTimi           
+            #print taxtiTimi           
             taxtiStart = datetime.datetime.strptime(taxtiTimi[0],"%H:%M")
             taxtiEnds = datetime.datetime.strptime(taxtiTimi[1],"%H:%M")
-            print taxtiStart
-            print taxtiEnds
+            #print taxtiStart
+            #print taxtiEnds
             if checkWeekday(taxti[2],weekday):
                 timiTaxta = min(taxtiEnds,stimpunUt) - max(taxtiStart,stimpunInn)
-                if timiTaxta < datetime.timedelta():
-                    print "mínus"
-                else:                  
+                if timiTaxta > datetime.timedelta():                  
                     _utkoma[taxti[0]] = _utkoma[taxti[0]] + timiTaxta.seconds/3600.0
         print _utkoma       
-        delta = stimpunUt - stimpunInn
-        print "%3.2f"%(delta.seconds/3600.0)
-    return [("dv", 1.0)]
+    return _utkoma
 
-vinna(stimplanir,taxtar)
