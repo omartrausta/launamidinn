@@ -1,16 +1,19 @@
 # encoding: utf-8
-import unittest, hvada_skrar_eru_staestar
+import unittest, hvada_skrar_eru_staestar, os
 
 class HvadaSkrarEruStaestarTestCase(unittest.TestCase):    
-    path = "/home/gunnl/py/"
     numberOfFiles = 3
-       
-    def testListFiles(self):
-        utkoma = hvada_skrar_eru_staestar.listFiles(self.path, self.numberOfFiles)
-        self.failUnless(utkoma == True, 'Test féll')
+    
+    path = os.getcwd() + os.sep + "py"
+    
+    # 
+    expectedResult = [('/home/gunnl/dev/workspace/Verkefni1/src/py/medium_file', 12L), ('/home/gunnl/dev/workspace/Verkefni1/src/py/large_file', 84L), ('/home/gunnl/dev/workspace/Verkefni1/src/py/extra_large_file', 23346L)]
+    
+    def testDtstat(self):
+        print self.path
+        result = hvada_skrar_eru_staestar.dtstat(self.path, self.numberOfFiles)
+        print result
+        print self.expectedResult
+        self.assertEqual(result, self.expectedResult, 'Test féll')
         
-    def testTest(self):
-        utkoma = hvada_skrar_eru_staestar.test(self.path)
-        self.failUnless(utkoma == True, 'Test féll')
-
 if __name__ == '__main__': unittest.main()
