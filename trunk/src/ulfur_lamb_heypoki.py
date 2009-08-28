@@ -19,23 +19,24 @@ def faera(a,b,stada,faersla):
     global profadar_stodur
     vinstri = stada[a]
     haegri = stada[b]
+    print "í bát : ", faersla
     for i in faersla:
-        print "i: ", i
         vinstri = vinstri.replace(i,"")
     ny_haegri = haegri + faersla
     ny_stada = [vinstri, ny_haegri]
     ny_stada = "".join(sorted(ny_stada[a])),"".join(sorted(ny_stada[b]))  
     if logleg_stada(ny_stada):
         if ny_stada in profadar_stodur:
-            print "stada fannst í prófaðar stöður"
+            print "stada fannst í prófaðar stöður " , ny_stada
+            print "núverandi staða er því: ", stada
             return []
         profadar_stodur.append(ny_stada)
-        print "profadar stodur: ", profadar_stodur
         print "ný staða fundin : ", ny_stada
+        print "profadar stodur: ", profadar_stodur      
     else:
         print "ólögleg staða", ny_stada
+        print "núverandi staða er því: ", stada
         return []
-    print "return"
     return ny_stada 
 
  
@@ -44,7 +45,7 @@ def keyra(stada):
     global lokastada
     lokastada = "".join(sorted(lokastada[0])),"".join(sorted(lokastada[1]))
     if stada == lokastada:
-        print "lokastöðu náð"
+        print "LOKASTÖÐU NÁÐ"
         return stada
     else:
         for i in range(0,2):
@@ -63,6 +64,6 @@ def keyra(stada):
                     
 
   
-        
+print "Upphafsstaða: ", upphafsstada        
 keyra(upphafsstada)
-
+print "Lokastaða er: ", lokastada
