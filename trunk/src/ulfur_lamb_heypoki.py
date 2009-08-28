@@ -5,7 +5,6 @@ profadar_stodur = []
 lokastada = ["", "bulh"]
 keyrir_bat = "b"
 
-
 def logleg_stada(stada):
     for bakki in stada:
         if "u" in bakki and "l" in bakki and "b" not in bakki:
@@ -60,10 +59,11 @@ def keyra(stada):
                     if uppfaerd_stada != []:
                         keyra(uppfaerd_stada)
                         break
+        return True
                     
-                    
+def main():
+    print "Upphafsstaða: ", upphafsstada        
+    print keyra(upphafsstada)
+    print "Lokastaða er: ", lokastada
 
-  
-print "Upphafsstaða: ", upphafsstada        
-keyra(upphafsstada)
-print "Lokastaða er: ", lokastada
+if __name__== "__main__": main()
