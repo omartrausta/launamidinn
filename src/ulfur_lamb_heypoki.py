@@ -1,10 +1,9 @@
 # encoding: utf-8
 
 upphafsstada = ["bulh", ""]
-profadar_stodur = ()
+profadar_stodur = []
 lokastada = ["", "bulh"]
 keyrir_bat = "b"
-faersla = ()
 
 
 def logleg_stada(stada):
@@ -16,26 +15,26 @@ def logleg_stada(stada):
     return True
  
  
-def faera(stada,faersla):
+def faera(a,b,stada,faersla):
     global profadar_stodur
-    vinstri = stada[0]
-    haegri = stada[1]
+    vinstri = stada[a]
+    haegri = stada[b]
     for i in faersla:
         print "i: ", i
         vinstri = vinstri.replace(i,"")
     ny_haegri = haegri + faersla
     ny_stada = [vinstri, ny_haegri]
-    ny_stada = "".join(sorted(ny_stada[0])),"".join(sorted(ny_stada[1]))  
+    ny_stada = "".join(sorted(ny_stada[a])),"".join(sorted(ny_stada[b]))  
     if logleg_stada(ny_stada):
         if ny_stada in profadar_stodur:
             print "stada fannst í prófaðar stöður"
-            return stada
-        profadar_stodur = profadar_stodur +ny_stada
-        print profadar_stodur
+            return []
+        profadar_stodur.append(ny_stada)
+        print "profadar stodur: ", profadar_stodur
         print "ný staða fundin : ", ny_stada
     else:
         print "ólögleg staða", ny_stada
-        return stada
+        return []
     print "return"
     return ny_stada 
 
@@ -46,48 +45,23 @@ def keyra(stada):
     lokastada = "".join(sorted(lokastada[0])),"".join(sorted(lokastada[1]))
     if stada == lokastada:
         print "lokastöðu náð"
-        return
+        return stada
     else:
-        for s in stada:
-            if keyrir_bat in s:
-                uppfaerd_stada = faera(stada,keyrir_bat)
-                if uppfaerd_stada == lokastada:
-                    print "lokastöðu náð"
-                    return
-                farthegar = s.replace(keyrir_bat,"")
+        for i in range(0,2):
+            if keyrir_bat in stada[i]:
+                uppfaerd_stada = faera(i,1-i,stada, keyrir_bat)
+                if uppfaerd_stada != []:
+                    keyra(uppfaerd_stada)
+                    break
+                farthegar = stada[i].replace(keyrir_bat,"")
                 for farthegi in farthegar:
-                    uppfaerd_stada = faera(stada,keyrir_bat+farthegi)
-                    if uppfaerd_stada == lokastada:
-                        print "lokastöðu náð"
-                        return
-                
+                    uppfaerd_stada = faera(i,1-i,stada, keyrir_bat+farthegi)
+                    if uppfaerd_stada != []:
+                        keyra(uppfaerd_stada)
+                        break
+                    
+                    
 
-
- 
- 
-                      
-
-        
-def vinstri_hlid(v, adili):
-    vinstri, haegri = v
-    if not adili in vinstri:
-        return False
-    if adili in haegri:
-        return False
-    haegri = haegri.replace("",adili)
-    vinsri = vinstri + adili
-    return vinstri, haegri
-
-def haegri_hlid(v, adili):
-    vinstri, haegri = v
-    if not adili in vinstri:
-        return False
-    if adili in haegri:
-        return False
-    vinstri = vinstri.replace(adili, "")
-    haegri = haegri + adili
-    return vinstri, haegri     
-  
   
         
 keyra(upphafsstada)
