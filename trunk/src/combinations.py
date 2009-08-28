@@ -13,9 +13,16 @@ def moguleikar(l, x):
         for c in moguleikar(l[1:], x):
             yield c
 
-def main(): 
-    litir=["gulur","rauður","grænn","blár","svartur","hvítur","fjólublár"]    
-    for m in moguleikar(litir, 2):
-        print "('", m[0], "','",m[1],"')"
+def work(l, x):
+    listi = []
+    for m in moguleikar(l, x):
+        listi.append(m)
+    return listi
     
+def main():
+    litir=["gulur","rauður","grænn","blár","svartur","hvítur","fjólublár"] 
+    result = work(litir, 2)
+    for r in result:
+        print r[0].encode("utf-8"), r[1].encode("utf-8")
+
 if __name__== "__main__": main()
