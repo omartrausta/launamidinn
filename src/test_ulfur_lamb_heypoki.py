@@ -2,13 +2,11 @@
 import unittest, ulfur_lamb_heypoki
 
 class UlfurLambHeypokiTestCase(unittest.TestCase):
+    upphafsstada = ["bulh", ""]
+    expectedStada = True
+    
     def testVinna(self):
-        vandi = ["bulh", ""]
-        print vandi
-        print ulfur_lamb_heypoki.logleg_stada(vandi)
-        vandi = ulfur_lamb_heypoki.haegri(vandi, "u")
-        vandi = ulfur_lamb_heypoki.haegri(vandi, "b")
-        print vandi
-        print ulfur_lamb_heypoki.logleg_stada(vandi)
+        utkoma = ulfur_lamb_heypoki.keyra(self.upphafsstada)
+        self.assertEqual(self.expectedStada, utkoma)
 
 if __name__ == '__main__': unittest.main()
